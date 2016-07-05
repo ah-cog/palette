@@ -1,0 +1,11 @@
+*.pyc
+/Content
+/Temporary
+
+*.jpg
+*.png
+!leggies.jpg # Don't ignore
+
+*.mid
+
+.DS_Store

@@ -6,6 +6,8 @@ import pytz, datetime # Time
 
 import os
 
+import random
+
 # Connect to Tumblr
 
 # Authorization information
@@ -26,7 +28,7 @@ client = pytumblr.TumblrRestClient(
 
 # Tried this size first. Took too long doing serial processing.
 # img = Image.new( 'RGB', (2048,2048), "white") # create a new black image
-img = Image.new( 'RGB', (512,512), "white") # create a new black image
+img = Image.new( 'RGB', (2048,2048), "white") # create a new black image
 # img = Image.new( 'RGB', (128,128), "white") # create a new black image
 pixels = img.load() # create the pixel map
 
@@ -48,8 +50,20 @@ for b in range(0, 255):
         for r in range(0, 255):
 
             # Draw rectangle and save in a file
-            draw.rectangle([(0, 0), (img.size[0], img.size[1])], fill=(r, g, b))
-            image_filename = "./Colorspace_Indices/" + str(r) + "_" + str(g) + "_" + str(b) + ".png"
+            draw.rectangle([(0, 0), (img.size[0], img.size[1])], fill=(255, 255, 255))
+
+            rnd = lambda: random.randint(0,255)
+            radius = 400
+            x_position = random.randint(radius, img.size[0] - (radius))
+            y_position = random.randint(radius, img.size[1] - (radius))
+            draw.ellipse((x_position-radius, y_position-radius, x_position+radius, y_position+radius), fill=(rnd(),rnd(),rnd()))
+
+            radius = 25
+            x_position = (radius / 2.0) + random.randint(0,img.size[0] - (radius))
+            y_position = (radius / 2.0) + random.randint(0,img.size[1] - (radius))
+            draw.ellipse((x_position-radius, y_position-radius, x_position+radius, y_position+radius), fill=(rnd(),rnd(),rnd()))
+
+            image_filename = "./Circle_And_Dot/" + str(r) + "_" + str(g) + "_" + str(b) + ".png"
             img.save(image_filename, "PNG")
 
             # Generate timestamp (index as seconds since January 1, 1970)
@@ -74,11 +88,11 @@ for b in range(0, 255):
 
 
             # Post to Tumblr
-            client.create_photo("colorspace-discrete",
-                                state="published",
-#                                date=post_time,
-                                tags=[hex_color_tag],
-                                data=image_filename)
+#             client.create_photo("circle-and-dot",
+#                                 state="published",
+# #                                date=post_time,
+#                                 tags=[hex_color_tag],
+#                                 data=image_filename)
 
             # Print progress
             print "Uploaded to Tumblr (%s, %s, %s)" % (r, g, b)

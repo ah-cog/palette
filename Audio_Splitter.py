@@ -3,8 +3,8 @@ from pydub.silence import split_on_silence
 
 import math
 
-filename = "gates-deposition-12.mp4"
-segment_length_seconds = 10
+filename = "./data/minsky/audio/marvin-minsky-stories.wav"
+segment_length_seconds = 30
 
 # Open the video file with the specified filename
 print "Opening video file...",
@@ -25,7 +25,7 @@ for i in range(0, segment_count):
     print "Done."
 
     print "Saving to file...",
-    segment.export("./data/seg{0}.wav".format(i), format="wav")
+    segment.export("./data/minsky/clips/{0}.wav".format(i), format="wav")
     print "Done."
 
 

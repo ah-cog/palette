@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
+#
+# Reads audio clips (.wav files) in a folder, transcribes them and stores them
+# into .txt files.
 
 import speech_recognition as sr
 
 # obtain path to "english.wav" in the same folder as this script
 from os import path
 
-segment_count = 365
+segment_count = 689
 for i in range(0, segment_count):
 
-    segment_name = "seg{0}".format(i)
-    filename = "./data/" + segment_name + ".wav"
+    segment_name = "{0}".format(i)
+    filename = "./data/minsky/clips/" + segment_name + ".wav"
     #print filename
 
     # WAV_FILE = path.join(path.dirname(path.realpath(__file__)), "10sec.wav")
@@ -38,7 +41,7 @@ for i in range(0, segment_count):
 
     # Write transcribed audio to a file
     if (google_transcription != None):
-        transcription_filename = "./data/" + segment_name + ".txt"
+        transcription_filename = "./data/minsky/transcripts/" + segment_name + ".txt"
         text_file = open(transcription_filename, "w")
         text_file.write("%s" % google_transcription)
         text_file.close()
