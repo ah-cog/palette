@@ -1,6 +1,6 @@
 # Factory
 
-I wrote these scripts to do my work for me.
+I use these scripts to generate automatic scratchers of the emergent itch.
 
 # Projects
 
@@ -73,3 +73,9 @@ PocketSphinx depends on [swig](http://macappstore.org/swig/).
 # References
 
 - [Marvin Minsky Stories](https://www.youtube.com/watch?v=xiUuQSCR4h8)
+
+# Cool Tools
+
+This is a curated list of the Factory's favorite tools.
+
+- [Awesome Python](https://github.com/vinta/awesome-python): Curated list of Python frameworks, libraries, software, and resources.
