@@ -20,15 +20,15 @@ with the help of Emmanuelle Gouillart's
 on [Scipy Lecture Notes](http://www.scipy-lectures.org/index.html).
 
 **Pitch_Classifier.py** detects the pitch and pitch duration, stores the
-start time of detected pitch, and records the confidence of  
-of each detection. It depends on [Aubio](https://aubio.org/) for pitch level and
+start time of detected pitch, and records the confidence of each detection.
+It depends on [Aubio](https://aubio.org/) for pitch level and
 duration extraction and [MIDO](https://mido.readthedocs.io/) for synthesizing
 MIDI files.
 
 **Pitch_To_MIDI.py** generates a MIDI file (.mid) for the text file of pitches,
 etc. produced by Pitch_Classifier.py.
 
-To convert run it:
+Usage example:
 
 ```
 python Pitch_To_MIDI.py ./Content/minsky/clips/44.wav
