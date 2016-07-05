@@ -13,21 +13,32 @@ Listed in order from most to least recent.
 
 # Dependencies
 
-The dependencies for **Colorspace Discrete** and **Swimming in Colorspace**:
+**Colorspace_Discrete.py** and **Swimming_In_Colorspace.py** depend on
+[scikit-image](http://scikit-image.org/). I got up and running quickly
+with the help of Emmanuelle Gouillart's
+[image processing tutorial](http://www.scipy-lectures.org/packages/scikit-image/)
+on [Scipy Lecture Notes](http://www.scipy-lectures.org/index.html).
 
-- scikit-image [Tutorial](http://www.scipy-lectures.org/packages/scikit-image/)
-
-**Pitch_Classifier.py** depends on [Aubio](https://aubio.org/) for pitch level and
+**Pitch_Classifier.py** detects the pitch and pitch duration, stores the
+start time of detected pitch, and records the confidence of  
+of each detection. It depends on [Aubio](https://aubio.org/) for pitch level and
 duration extraction and [MIDO](https://mido.readthedocs.io/) for synthesizing
 MIDI files.
 
-**MIDI_to_Sheet_Music.py** depends on
-[Abjad](http://www.projectabjad.org/) and
-[LilyPond](http://lilypond.org/index.html) to generate sheet music.
+**Pitch_To_MIDI.py** generates a MIDI file (.mid) for the text file of pitches,
+etc. produced by Pitch_Classifier.py.
 
-Start by entering:
+To convert run it:
 
-`python Pitch_To_MIDI.py ./data/mips/44.wav`
+```
+python Pitch_To_MIDI.py ./Content/minsky/clips/44.wav
+```
+
+**MIDI_to_Sheet_Music.py** generates the printable sheet music from a
+given MIDI file (.mid). The script depends on the
+[Abjad](http://www.projectabjad.org/) Python library to generate the music
+notation and the [LilyPond](http://lilypond.org/index.html) LaTeX
+package to generate the sheet music documents (.pdf).
 
 **Generate_Speech.py** depends on [pyttsx](https://github.com/parente/pyttsx).
 
@@ -39,7 +50,9 @@ It also depends on pyaudio. I used a workaround to install it described on
 [StackExchange](http://stackoverflow.com/questions/33513522/when-installing-pyaudio-pip-cannot-find-portaudio-h-in-usr-local-include).
 As suggested by the post, I used the following command:
 
-`pip install --global-option='build_ext' --global-option='-I/usr/local/include' --global-option='-L/usr/local/lib' pyaudio`
+````
+pip install --global-option='build_ext' --global-option='-I/usr/local/include' --global-option='-L/usr/local/lib' pyaudio
+```
 
 pyaudio depends on [PortAudio](http://portaudio.com/). Instructions for installing
 it are [here](http://portaudio.com/docs/v19-doxydocs/compile_mac_coreaudio.html).
