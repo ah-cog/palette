@@ -9,11 +9,15 @@ import mido
 
 from abjad import *
 
-if len(sys.argv) < 2:
-    print("Usage: %s <filename> [samplerate]" % sys.argv[0])
-    sys.exit(1)
+# if len(sys.argv) < 2:
+#     print("Usage: %s <filename> [samplerate]" % sys.argv[0])
+#     sys.exit(1)
 
-filename = sys.argv[1]
+# filename = sys.argv[1]
+
+file_index = "137"
+
+filename = "./Content/Minsky/clips/" + file_index + ".wav"
 
 downsample = 1
 samplerate = 44100 // downsample
@@ -25,7 +29,7 @@ hop_s = 512  // downsample # hop size
 s = source(filename, samplerate, hop_s)
 samplerate = s.samplerate
 
-tolerance = 0.8
+tolerance = 0.00 # tolerance = 0.8
 
 pitch_o = pitch("yin", win_s, hop_s, samplerate)
 pitch_o.set_unit("midi")
@@ -38,7 +42,7 @@ confidences = []
 timez = []
 
 # Open file
-output_file_name = "./data/pitches.txt"
+output_file_name = "./Content/Minsky/pitches/" + file_index + ".txt"
 output_file = open(output_file_name, "w")
 
 
@@ -52,6 +56,9 @@ while True:
     confidence = pitch_o.get_confidence()
     #if confidence < 0.8: pitch = 0.
     print("%f %f %f" % (total_frames / float(samplerate), pitch, confidence))
+
+    # Write times and cleaned_pitches to a file (to use feed to MIDI synthesizer)
+    output_file.write("%f\t%f\t%f\n" % (total_frames / float(samplerate), pitch, confidence))
 
     timez += [total_frames / float(samplerate)]
 
@@ -88,8 +95,8 @@ with MidiFile() as mid:
 
     for t in range(len(pitches)):
 
-        # Write times and cleaned_pitches to a file (to use feed to MIDI synthesizer)
-        output_file.write("%f\t%f\t%f\n" % (total_frames / float(samplerate), pitch, confidence))
+        # # Write times and cleaned_pitches to a file (to use feed to MIDI synthesizer)
+        # output_file.write("%f\t%f\t%f\n" % (total_frames / float(samplerate), pitch, confidence))
 
         # Note
         if time == -1:
@@ -111,9 +118,9 @@ with MidiFile() as mid:
         # track.append(mido.Message('note_on', note=int(pitch), velocity=int(confidence * 127.0), time=int(time)))
         # track.append(mido.Message('note_off', note=int(pitch), velocity=int(127 - (confidence * 127.0)), time=32))
         track.append(mido.Message('note_on', note=int(pitches[t]), velocity=int(confidences[t] * 127.0), time=int(timez[t])))
-        #track.append(mido.Message('note_off', note=int(pitches[t]), velocity=int(127 - (confidences[t] * 127.0)), time=0))
+        # track.append(mido.Message('note_off', note=int(pitches[t]), velocity=int(127 - (confidences[t] * 127.0)), time=0))
 
-    mid.save('new_song.mid')
+    mid.save('./Content/Minsky/midi/' + file_index + '.mid')
 
 
 
@@ -168,5 +175,5 @@ ax3.plot(times, [tolerance]*len(confidences))
 ax3.axis( xmin = times[0], xmax = times[-1])
 ax3.set_ylabel('condidence')
 set_xlabels_sample2time(ax3, times[-1], samplerate)
-plt.show()
-#plt.savefig(os.path.basename(filename) + '.svg')
+# plt.show()
+plt.savefig('./Content/Minsky/plots/' + file_index + '.svg')
